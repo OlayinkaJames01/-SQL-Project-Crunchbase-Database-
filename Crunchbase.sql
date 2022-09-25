@@ -6,7 +6,16 @@ FROM tutorial.crunchbase_companies
 SELECT * 
 FROM tutorial.crunchbase_acquisitions
 
--- Selecting the crunchbase investments table
+-- Selecting the first part crunchbase investments table
+SELECT * 
+FROM tutorial.crunchbase_investments_part1
+
+-- Selecting the second part crunchbase investments table
+SELECT * 
+FROM tutorial.crunchbase_investments_part2
+
+
+-- Selecting the combined crunchbase investments table
 SELECT * 
 FROM tutorial.crunchbase_investments
 
@@ -22,8 +31,8 @@ LEFT JOIN tutorial.crunchbase_companies com
   ON acq.company_permalink = com.permalink
 /*  
 Count the number of unique companies (don't double-count companies) and 
---unique acquired companies by state. Do not include results for which there is no state data, 
---and order by the number of acquired companies from highest to lowest
+unique acquired companies by state. Do not include results for which there is no state data, 
+and order by the number of acquired companies from highest to lowest
 */
 
 SELECT CASE WHEN companies.state_code IS NULL THEN 'No State Code'
@@ -81,3 +90,42 @@ SELECT COUNT(CASE WHEN companies.permalink IS NOT NULL AND investments.company_p
   FROM tutorial.crunchbase_companies companies
   FULL JOIN tutorial.crunchbase_investments investments
     ON companies.permalink = investments.company_permalink
+    
+/*
+Write a query that appends the two crunchbase_investments datasets above (including duplicate values). 
+Filter the first dataset to only companies with names that start with the letter "T", 
+and filter the second to companies with names starting with "M" (both not case-sensitive).
+Only include the company_permalink, company_name, and investor_name columns.
+*/
+       
+SELECT company_permalink company_name, investor_name
+FROM tutorial.crunchbase_investments_part1
+WHERE company_name ILIKE 't%'
+UNION ALL
+SELECT company_permalink company_name, investor_name
+FROM tutorial.crunchbase_investments_part2
+WHERE company_name ILIKE 'm%'
+
+/*
+Write a query that shows 3 columns. The first indicates which dataset (part 1 or 2) the data comes from, 
+the second shows company status, and the third is a count of the number of investors.
+*/
+
+
+SELECT 'investments_part1' AS dataset_name,
+       companies.status,
+       COUNT(DISTINCT investments.investor_permalink) AS investors
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments_part1 investments
+    ON companies.permalink = investments.company_permalink
+ GROUP BY 1,2
+
+ UNION ALL
+ 
+ SELECT 'investments_part2' AS dataset_name,
+       companies.status,
+       COUNT(DISTINCT investments.investor_permalink) AS investors
+  FROM tutorial.crunchbase_companies companies
+  LEFT JOIN tutorial.crunchbase_investments_part2 investments
+    ON companies.permalink = investments.company_permalink
+ GROUP BY 1,2
