@@ -5,4 +5,6 @@ This project features some queries that help to get better insight into differen
 
 - Crunchbase Companies
 - Crunchbase Acquisitions
+- Crunchbase Investments Part 1
+- Crunchbase Investments Part 2
 - Crunchbase Investments
