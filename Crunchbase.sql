@@ -129,3 +129,5 @@ SELECT 'investments_part1' AS dataset_name,
   LEFT JOIN tutorial.crunchbase_investments_part2 investments
     ON companies.permalink = investments.company_permalink
  GROUP BY 1,2
+
+-- Implementing temporary table for some of the queries above and other types of joins if possible
