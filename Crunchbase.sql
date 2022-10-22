@@ -130,4 +130,15 @@ SELECT 'investments_part1' AS dataset_name,
     ON companies.permalink = investments.company_permalink
  GROUP BY 1,2
 
--- Implementing temporary table for some of the queries above and other types of joins if possible
+-- Working with crazy date and manipulation
+-- The difference between the date founded and the date acquired
+
+SELECT companies.permalink,
+       companies.founded_at_clean,
+       acquisitions.acquired_at_cleaned,
+       acquisitions.acquired_at_cleaned -
+         companies.founded_at_clean::timestamp AS time_to_acquisition
+  FROM tutorial.crunchbase_companies_clean_date companies
+  JOIN tutorial.crunchbase_acquisitions_clean_date acquisitions
+    ON acquisitions.company_permalink = companies.permalink
+ WHERE founded_at_clean IS NOT NULL
