@@ -19,6 +19,13 @@ FROM tutorial.crunchbase_investments_part2
 SELECT * 
 FROM tutorial.crunchbase_investments
 
+-- Tables to understand date format manipulation
+SELECT *
+FROM tutorial.crunchbase_companies_clean_date
+
+SELECT *
+FROM tutorial.crunchbase_acquisitions_clean_date
+
 /*  
 Write a query that performs an inner join between the tutorial.crunchbase_acquisitions table 
 and the tutorial.crunchbase_companies table, but instead of listing individual rows, 
