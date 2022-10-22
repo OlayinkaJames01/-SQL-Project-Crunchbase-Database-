@@ -149,3 +149,12 @@ SELECT companies.permalink,
   JOIN tutorial.crunchbase_acquisitions_clean_date acquisitions
     ON acquisitions.company_permalink = companies.permalink
  WHERE founded_at_clean IS NOT NULL
+ 
+ 
+ -- Adding 1 week to the founded date of the company
+SELECT companies.permalink,
+       companies.founded_at_clean,
+       companies.founded_at_clean::timestamp +
+         INTERVAL '1 week' AS plus_one_week
+  FROM tutorial.crunchbase_companies_clean_date companies
+ WHERE founded_at_clean IS NOT NULL
