@@ -9,4 +9,4 @@ This project features some queries that help to get better insight into differen
 - Crunchbase Investments Part 2
 - Crunchbase Investments (Combined)
 - Crunchbase Companies Clean Date
-- 
+- Crunchbase Acquisitions Clean Date
