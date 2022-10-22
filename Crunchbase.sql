@@ -158,3 +158,11 @@ SELECT companies.permalink,
          INTERVAL '1 week' AS plus_one_week
   FROM tutorial.crunchbase_companies_clean_date companies
  WHERE founded_at_clean IS NOT NULL
+ 
+ 
+ -- The difference between the date the company was founded and today
+ SELECT companies.permalink,
+       companies.founded_at_clean,
+       NOW() - companies.founded_at_clean::timestamp AS founded_time_ago
+  FROM tutorial.crunchbase_companies_clean_date companies
+ WHERE founded_at_clean IS NOT NULL
